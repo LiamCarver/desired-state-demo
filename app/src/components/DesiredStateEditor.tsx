@@ -1,6 +1,8 @@
 import type { FocusEvent } from 'react'
+import type { ShapeType } from '../design/shapeTypes'
+import ShapeGlyph from './ShapeGlyph'
 
-export type DesiredShapeType = 'circle' | 'triangle' | 'square' | 'x'
+export type DesiredShapeType = ShapeType
 
 export type DesiredShape = {
   id: string
@@ -78,9 +80,10 @@ function DesiredStateEditor({
                 <details className="shape-dropdown" onBlur={handleDropdownBlur}>
                   <summary>
                     <span
-                      className={`dropdown-shape-chip dropdown-shape-${shape.type}`}
                       aria-hidden="true"
-                    />
+                    >
+                      <ShapeGlyph type={shape.type} className="dropdown-shape-glyph" />
+                    </span>
                     <span>
                       {shapeOptions.find((option) => option.value === shape.type)?.label ??
                         shape.type}
@@ -101,9 +104,10 @@ function DesiredStateEditor({
                         }}
                       >
                         <span
-                          className={`dropdown-shape-chip dropdown-shape-${option.value}`}
                           aria-hidden="true"
-                        />
+                        >
+                          <ShapeGlyph type={option.value} className="dropdown-shape-glyph" />
+                        </span>
                         <span>{option.label}</span>
                       </button>
                     ))}

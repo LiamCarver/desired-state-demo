@@ -1,7 +1,8 @@
+import type { ShapeType } from './shapeTypes'
+
 export type ShapeSpec = {
-  id: string
+  id: ShapeType
   label: string
-  className: string
 }
 
 export type PaletteSwatch = {
@@ -10,10 +11,10 @@ export type PaletteSwatch = {
 }
 
 export const shapeSpecs: ShapeSpec[] = [
-  { id: 'circle', label: 'Circle', className: 'shape shape-circle' },
-  { id: 'triangle', label: 'Triangle', className: 'shape shape-triangle' },
-  { id: 'square', label: 'Square', className: 'shape shape-square' },
-  { id: 'x', label: 'X', className: 'shape shape-x' },
+  { id: 'circle', label: 'Circle' },
+  { id: 'triangle', label: 'Triangle' },
+  { id: 'square', label: 'Square' },
+  { id: 'x', label: 'X' },
 ]
 
 export const palette: PaletteSwatch[] = [
