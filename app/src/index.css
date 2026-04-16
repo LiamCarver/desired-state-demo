@@ -254,6 +254,244 @@ h2 {
   outline-offset: 2px;
 }
 
+.editor-card {
+  border: 1px solid var(--stroke);
+  background: var(--bg-panel);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.editor-card-header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.editor-card-header p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.editor-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.editor-row {
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: rgba(16, 26, 36, 0.85);
+  padding: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.editor-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.editor-id {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.editor-controls {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  align-items: start;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.field span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.field select {
+  border: 1px solid var(--stroke-strong);
+  background: rgba(11, 17, 24, 0.95);
+  color: var(--text-main);
+  border-radius: 8px;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+}
+
+.field select:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
+.shape-dropdown {
+  position: relative;
+}
+
+.shape-dropdown summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.55rem 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid var(--stroke-strong);
+  background: rgba(11, 17, 24, 0.95);
+  border-radius: 8px;
+}
+
+.shape-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.shape-dropdown summary:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
+.shape-dropdown-menu {
+  display: grid;
+  gap: 0.25rem;
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 0.45rem;
+  border: 1px solid var(--stroke-strong);
+  border-radius: 8px;
+  background: rgba(11, 17, 24, 0.98);
+  box-shadow: 0 10px 28px rgba(4, 9, 15, 0.5);
+}
+
+.shape-dropdown:not([open]) .shape-dropdown-menu {
+  display: none;
+}
+
+.shape-dropdown-option {
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-align: left;
+}
+
+.shape-dropdown-option:hover {
+  background: rgba(166, 183, 198, 0.14);
+}
+
+.shape-dropdown-option:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
+.dropdown-shape-chip {
+  width: 14px;
+  height: 14px;
+  background: #d5dfeb;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.dropdown-shape-circle {
+  border-radius: 999px;
+}
+
+.dropdown-shape-square {
+  border-radius: 2px;
+}
+
+.dropdown-shape-triangle {
+  clip-path: polygon(50% 8%, 4% 92%, 96% 92%);
+}
+
+.color-dropdown {
+  position: relative;
+}
+
+.color-dropdown summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.55rem 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid var(--stroke-strong);
+  background: rgba(11, 17, 24, 0.95);
+  border-radius: 8px;
+}
+
+.color-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.color-dropdown summary:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
+.dropdown-color-chip {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  flex-shrink: 0;
+}
+
+.color-dropdown-menu {
+  display: grid;
+  gap: 0.25rem;
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 0.45rem;
+  border: 1px solid var(--stroke-strong);
+  border-radius: 8px;
+  background: rgba(11, 17, 24, 0.98);
+  box-shadow: 0 10px 28px rgba(4, 9, 15, 0.5);
+}
+
+.color-dropdown:not([open]) .color-dropdown-menu {
+  display: none;
+}
+
+.color-dropdown-option {
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-align: left;
+}
+
+.color-dropdown-option:hover {
+  background: rgba(166, 183, 198, 0.14);
+}
+
+.color-dropdown-option:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
 .shape-card,
 .swatch-card {
   border: 1px solid var(--stroke);

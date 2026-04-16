@@ -44,6 +44,9 @@ function DesignRoute() {
           <Link className="btn btn-ghost" to="/design/components/canvas">
             Open ActualStateCanvas
           </Link>
+          <Link className="btn btn-ghost" to="/design/components/desired-state-editor">
+            Open DesiredStateEditor
+          </Link>
         </div>
       </section>
     </main>

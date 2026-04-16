@@ -27,6 +27,7 @@ describe('App routing', () => {
     expect(screen.getByRole('heading', { name: 'Buttons' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Color Palette' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Open ActualStateCanvas' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Open DesiredStateEditor' })).toBeInTheDocument()
   })
 
   it('renders the canvas component route', () => {
@@ -35,6 +36,14 @@ describe('App routing', () => {
     expect(screen.getByRole('heading', { name: 'ActualStateCanvas' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Actual state canvas component' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Delete Selected' })).toBeInTheDocument()
+  })
+
+  it('renders the desired state editor component route', () => {
+    renderRoute('/design/components/desired-state-editor')
+
+    expect(screen.getByRole('heading', { name: 'DesiredStateEditor' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Desired state editor component' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Add Shape' })).toBeInTheDocument()
   })
 
   it('redirects unknown routes to home', () => {

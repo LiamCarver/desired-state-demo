@@ -20,5 +20,4 @@ export const palette: PaletteSwatch[] = [
   { name: 'Mint', value: '#1CBFAA' },
   { name: 'Amber', value: '#E9A322' },
   { name: 'Coral', value: '#E8695C' },
-  { name: 'Slate', value: '#2A3440' },
 ]
