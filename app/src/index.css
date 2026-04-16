@@ -146,6 +146,114 @@ h2 {
   grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
 }
 
+.inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.canvas-card {
+  border: 1px solid var(--stroke);
+  background: var(--bg-panel);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.canvas-card-header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.canvas-card-header p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.canvas-surface {
+  position: relative;
+  min-height: 280px;
+  border-radius: 14px;
+  border: 1px solid var(--stroke-strong);
+  background:
+    linear-gradient(rgba(166, 183, 198, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(166, 183, 198, 0.16) 1px, transparent 1px),
+    radial-gradient(circle at 65% 28%, rgba(25, 146, 212, 0.2), transparent 44%),
+    radial-gradient(circle at 28% 68%, rgba(28, 191, 170, 0.14), transparent 44%),
+    var(--bg-elev);
+  background-size:
+    26px 26px,
+    26px 26px,
+    100% 100%,
+    100% 100%,
+    auto;
+}
+
+.canvas-shape {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border: none;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 8px 18px rgba(4, 9, 15, 0.4);
+}
+
+.canvas-shape:hover {
+  transform: translate(-50%, -50%) scale(1.03);
+}
+
+.canvas-shape:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
+.canvas-shape-circle {
+  border-radius: 999px;
+}
+
+.canvas-shape-square {
+  border-radius: 12px;
+}
+
+.canvas-shape-triangle {
+  clip-path: polygon(50% 8%, 4% 92%, 96% 92%);
+}
+
+.canvas-shape.is-selected {
+  box-shadow:
+    0 0 0 2px rgba(231, 237, 244, 0.95),
+    0 12px 28px rgba(4, 9, 15, 0.55);
+}
+
+.canvas-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.canvas-color-list {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.canvas-color-chip {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+}
+
+.canvas-color-chip:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
 .shape-card,
 .swatch-card {
   border: 1px solid var(--stroke);

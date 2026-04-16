@@ -26,6 +26,15 @@ describe('App routing', () => {
     expect(screen.getByRole('heading', { name: 'Shapes' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Buttons' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Color Palette' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Open ActualStateCanvas' })).toBeInTheDocument()
+  })
+
+  it('renders the canvas component route', () => {
+    renderRoute('/design/components/canvas')
+
+    expect(screen.getByRole('heading', { name: 'ActualStateCanvas' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Actual state canvas component' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Delete Selected' })).toBeInTheDocument()
   })
 
   it('redirects unknown routes to home', () => {

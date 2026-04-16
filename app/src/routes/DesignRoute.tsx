@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import BackgroundPreview from '../components/BackgroundPreview'
 import ButtonShowcase from '../components/ButtonShowcase'
 import PaletteGrid from '../components/PaletteGrid'
@@ -34,6 +35,16 @@ function DesignRoute() {
       <section className="card">
         <h2>Color Palette</h2>
         <PaletteGrid />
+      </section>
+
+      <section className="card">
+        <h2>Component Routes</h2>
+        <p>Preview isolated component implementations with example props.</p>
+        <div className="inline-actions">
+          <Link className="btn btn-ghost" to="/design/components/canvas">
+            Open ActualStateCanvas
+          </Link>
+        </div>
       </section>
     </main>
   )
