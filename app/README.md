@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# Desired State Demo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Purpose
+This app is an interactive teaching tool for desired-state systems.
 
-Currently, two official plugins are available:
+Current implementation is focused on:
+- visual system and component previews
+- interaction patterns for core UI panels
+- props-driven component contracts before full reconciliation logic
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Quick Start
+```bash
+cd app
+cmd /c npm install
+cmd /c npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Validation Commands
+```bash
+cmd /c npm run lint
+cmd /c npm run test:run
+cmd /c npm run build
 ```
+
+## Routes
+- `/` Home
+- `/design` Design sandbox
+- `/design/components/canvas` `ActualStateCanvas` preview
+- `/design/components/desired-state-editor` `DesiredStateEditor` preview
+
+## Core Components
+- `ActualStateCanvas`
+- `DesiredStateEditor`
+- `ShapeButtonShell`
+- `ShapeGlyph`
+
+## Current UI Behavior Highlights
+- PS-inspired round black shell styling for icon/shape controls.
+- Hollow shape glyphs with PS-style color mapping.
+- Contextual color palette in canvas:
+  - hidden by default
+  - revealed when a shape is selected
+  - hidden when deselected by canvas click-away
+
+## Important Docs
+- [Fresh Context Handoff](../docs/fresh-context-handoff.md)
+- [Current Implementation](../docs/current-implementation.md)
+- [UI Decisions](../docs/ui-decisions.md)
+- [Plan](../docs/plan.md)
+
+## Next Recommended Work
+1. Build `EventToastStream` as a props-driven preview component.
+2. Create a composed three-panel route for integrated layout rehearsal.
+3. Begin reconciliation/data-flow wiring after panel contracts are locked.

@@ -14,6 +14,9 @@
 - [Reconciliation](./reconciliation.md)
 - [Roadmap](./roadmap.md)
 - [Open Questions](./open-questions.md)
+- [Fresh Context Handoff](./fresh-context-handoff.md)
+- [Current Implementation](./current-implementation.md)
+- [UI Decisions](./ui-decisions.md)
 
 ## Execution Order
 1. Align on concept definitions and assumptions:
