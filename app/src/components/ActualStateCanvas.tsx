@@ -100,8 +100,22 @@ function ActualStateCanvas({
             ))}
           </div>
         </div>
-        <button type="button" className="btn btn-danger" onClick={onDeleteSelected}>
-          Delete Selected
+        <button
+          type="button"
+          className="btn-shell-only"
+          aria-label="Delete selected shape"
+          title="Delete selected shape"
+          onClick={onDeleteSelected}
+        >
+          <span className="action-shell" style={{ color: '#FF6B6B' }}>
+            <svg className="action-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 5h6" />
+              <path d="M4.5 7h15" />
+              <path d="M8 7v11a1.5 1.5 0 0 0 1.5 1.5h5A1.5 1.5 0 0 0 16 18V7" />
+              <path d="M10 10v6" />
+              <path d="M14 10v6" />
+            </svg>
+          </span>
         </button>
       </div>
     </section>
