@@ -24,6 +24,7 @@ type ActualStateCanvasProps = {
   selectedShapeId?: string
   colorOptions: CanvasColorOption[]
   onSelectShape: (shapeId: string) => void
+  onClearSelection: () => void
   onDeleteSelected: () => void
   onSelectColor: (colorValue: string) => void
 }
@@ -35,9 +36,12 @@ function ActualStateCanvas({
   selectedShapeId,
   colorOptions,
   onSelectShape,
+  onClearSelection,
   onDeleteSelected,
   onSelectColor,
 }: ActualStateCanvasProps) {
+  const hasSelection = Boolean(selectedShapeId)
+
   return (
     <section className="canvas-card" aria-label="Actual state canvas component">
       <header className="canvas-card-header">
@@ -45,7 +49,16 @@ function ActualStateCanvas({
         <p>{subtitle}</p>
       </header>
 
-      <div className="canvas-surface" role="list" aria-label="Shapes on canvas">
+      <div
+        className="canvas-surface"
+        role="list"
+        aria-label="Shapes on canvas"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) {
+            onClearSelection()
+          }
+        }}
+      >
         {shapes.map((shape) => {
           const shapeClass = `canvas-shape canvas-shape-${shape.type}`
           const isSelected = shape.id === selectedShapeId
@@ -70,17 +83,22 @@ function ActualStateCanvas({
       </div>
 
       <div className="canvas-toolbar">
-        <div className="canvas-color-list" aria-label="Shape color options">
-          {colorOptions.map((color) => (
-            <button
-              key={color.value}
-              type="button"
-              className="canvas-color-chip"
-              aria-label={`Set shape color to ${color.name}`}
-              onClick={() => onSelectColor(color.value)}
-              style={{ backgroundColor: color.value }}
-            />
-          ))}
+        <div
+          className={`canvas-color-list-wrapper${hasSelection ? ' is-visible' : ''}`}
+          aria-hidden={!hasSelection}
+        >
+          <div className="canvas-color-list" aria-label="Shape color options">
+            {colorOptions.map((color) => (
+              <button
+                key={color.value}
+                type="button"
+                className="canvas-color-chip"
+                aria-label={`Set shape color to ${color.name}`}
+                onClick={() => onSelectColor(color.value)}
+                style={{ backgroundColor: color.value }}
+              />
+            ))}
+          </div>
         </div>
         <button type="button" className="btn btn-danger" onClick={onDeleteSelected}>
           Delete Selected

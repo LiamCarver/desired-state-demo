@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ActualStateCanvas, { type CanvasColorOption, type CanvasShape } from '../components/ActualStateCanvas'
 import { palette } from '../design/designTokens'
@@ -17,6 +18,8 @@ const sampleColors: CanvasColorOption[] = palette.map((swatch) => ({
 function noop() {}
 
 function CanvasComponentRoute() {
+  const [selectedShapeId, setSelectedShapeId] = useState<string | undefined>(undefined)
+
   return (
     <main className="design-page">
       <header className="hero-card">
@@ -31,9 +34,10 @@ function CanvasComponentRoute() {
         title="Actual State Canvas"
         subtitle="Select a shape, pick a color, or delete."
         shapes={sampleShapes}
-        selectedShapeId="shape-4"
+        selectedShapeId={selectedShapeId}
         colorOptions={sampleColors}
-        onSelectShape={noop}
+        onSelectShape={setSelectedShapeId}
+        onClearSelection={() => setSelectedShapeId(undefined)}
         onDeleteSelected={noop}
         onSelectColor={noop}
       />

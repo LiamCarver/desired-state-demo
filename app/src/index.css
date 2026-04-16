@@ -210,7 +210,7 @@ h2 {
 }
 
 .canvas-shape:hover {
-  transform: translate(-50%, -50%) scale(1.03);
+  transform: translate(-50%, -50%) scale(1.08);
 }
 
 .canvas-shape:focus-visible {
@@ -257,6 +257,61 @@ h2 {
   display: flex;
   gap: 0.55rem;
   flex-wrap: wrap;
+}
+
+.canvas-color-list-wrapper {
+  max-width: 0;
+  max-height: 0;
+  opacity: 0;
+  transform: translateX(-14px);
+  overflow: hidden;
+  pointer-events: none;
+  transition:
+    max-width 280ms ease,
+    max-height 240ms ease,
+    opacity 220ms ease,
+    transform 280ms ease;
+}
+
+.canvas-color-list-wrapper.is-visible {
+  max-width: 420px;
+  max-height: 48px;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.canvas-color-chip {
+  opacity: 0;
+  transform: translateY(8px) scale(0.92);
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.9, 0.25, 1),
+    opacity 220ms ease;
+}
+
+.canvas-color-list-wrapper.is-visible .canvas-color-chip {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.canvas-color-list-wrapper.is-visible .canvas-color-chip:nth-child(1) {
+  transition-delay: 20ms;
+}
+
+.canvas-color-list-wrapper.is-visible .canvas-color-chip:nth-child(2) {
+  transition-delay: 50ms;
+}
+
+.canvas-color-list-wrapper.is-visible .canvas-color-chip:nth-child(3) {
+  transition-delay: 80ms;
+}
+
+.canvas-color-list-wrapper.is-visible .canvas-color-chip:nth-child(4) {
+  transition-delay: 110ms;
+}
+
+.canvas-color-list-wrapper:not(.is-visible) .canvas-color-chip {
+  transition-delay: 0ms;
 }
 
 .canvas-color-chip {
@@ -570,7 +625,15 @@ h2 {
 }
 
 .btn-shell-only:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.06);
+}
+
+.btn-shell-only:hover .action-shell {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(231, 237, 244, 0.22),
+    0 12px 24px rgba(4, 9, 15, 0.55);
 }
 
 .btn-shell-only:focus-visible {
