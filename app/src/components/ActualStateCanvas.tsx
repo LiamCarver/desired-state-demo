@@ -95,7 +95,7 @@ function ActualStateCanvas({
                 className="canvas-color-chip"
                 aria-label={`Set shape color to ${color.name}`}
                 onClick={() => onSelectColor(color.value)}
-                style={{ backgroundColor: color.value }}
+                style={{ ['--chip-color' as string]: color.value }}
               />
             ))}
           </div>
