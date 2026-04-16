@@ -2,6 +2,8 @@
   --bg-base: #0b1118;
   --bg-elev: #101a24;
   --bg-panel: rgba(19, 30, 41, 0.86);
+  --panel-grad-top: rgba(31, 47, 62, 0.62);
+  --panel-grad-bottom: rgba(14, 24, 34, 0.74);
   --text-main: #e7edf4;
   --text-muted: #a6b7c6;
   --stroke: rgba(166, 183, 198, 0.2);
@@ -71,7 +73,7 @@ body {
 .hero-card,
 .card {
   border: 1px solid var(--stroke);
-  background: var(--bg-panel);
+  background: linear-gradient(165deg, var(--panel-grad-top), var(--panel-grad-bottom));
   border-radius: 18px;
   box-shadow: var(--shadow);
 }
@@ -154,7 +156,7 @@ h2 {
 
 .canvas-card {
   border: 1px solid var(--stroke);
-  background: var(--bg-panel);
+  background: linear-gradient(165deg, var(--panel-grad-top), var(--panel-grad-bottom));
   border-radius: 18px;
   box-shadow: var(--shadow);
   padding: 1.2rem;
@@ -256,7 +258,7 @@ h2 {
 
 .editor-card {
   border: 1px solid var(--stroke);
-  background: var(--bg-panel);
+  background: linear-gradient(165deg, var(--panel-grad-top), var(--panel-grad-bottom));
   border-radius: 18px;
   box-shadow: var(--shadow);
   padding: 1.2rem;

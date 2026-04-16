@@ -4,9 +4,9 @@ import DesiredStateEditor from '../components/DesiredStateEditor'
 import { palette } from '../design/designTokens'
 
 const initialDesiredShapes = [
-  { id: 'shape-a1', type: 'circle' as const, color: '#1992D4' },
-  { id: 'shape-b2', type: 'triangle' as const, color: '#1CBFAA' },
-  { id: 'shape-c3', type: 'square' as const, color: '#E9A322' },
+  { id: 'shape-1', type: 'circle' as const, color: '#1992D4' },
+  { id: 'shape-2', type: 'triangle' as const, color: '#1CBFAA' },
+  { id: 'shape-3', type: 'square' as const, color: '#E9A322' },
 ]
 
 const sampleColors = palette.map((swatch) => ({

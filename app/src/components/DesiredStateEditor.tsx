@@ -1,3 +1,5 @@
+import type { FocusEvent } from 'react'
+
 type DesiredShapeType = 'circle' | 'triangle' | 'square'
 
 type DesiredShape = {
@@ -20,6 +22,12 @@ type DesiredStateEditorProps = {
   onRemoveShape: (shapeId: string) => void
   onChangeShapeType: (shapeId: string, nextType: DesiredShapeType) => void
   onChangeShapeColor: (shapeId: string, nextColor: string) => void
+}
+
+function handleDropdownBlur(event: FocusEvent<HTMLDetailsElement>) {
+  if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+    event.currentTarget.removeAttribute('open')
+  }
 }
 
 const shapeOptions: Array<{ value: DesiredShapeType; label: string }> = [
@@ -66,7 +74,7 @@ function DesiredStateEditor({
             <div className="editor-controls">
               <label className="field">
                 <span>Type</span>
-                <details className="shape-dropdown">
+                <details className="shape-dropdown" onBlur={handleDropdownBlur}>
                   <summary>
                     <span
                       className={`dropdown-shape-chip dropdown-shape-${shape.type}`}
@@ -104,7 +112,7 @@ function DesiredStateEditor({
 
               <label className="field">
                 <span>Color</span>
-                <details className="color-dropdown">
+                <details className="color-dropdown" onBlur={handleDropdownBlur}>
                   <summary>
                     <span
                       className="dropdown-color-chip"
