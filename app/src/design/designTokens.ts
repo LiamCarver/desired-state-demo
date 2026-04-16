@@ -13,6 +13,7 @@ export const shapeSpecs: ShapeSpec[] = [
   { id: 'circle', label: 'Circle', className: 'shape shape-circle' },
   { id: 'triangle', label: 'Triangle', className: 'shape shape-triangle' },
   { id: 'square', label: 'Square', className: 'shape shape-square' },
+  { id: 'x', label: 'X', className: 'shape shape-x' },
 ]
 
 export const palette: PaletteSwatch[] = [

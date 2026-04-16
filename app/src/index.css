@@ -223,6 +223,31 @@ h2 {
   clip-path: polygon(50% 8%, 4% 92%, 96% 92%);
 }
 
+.canvas-shape-x {
+  box-shadow: none;
+}
+
+.canvas-shape-x::before,
+.canvas-shape-x::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  height: 16%;
+  border-radius: 999px;
+  background: currentColor;
+  transform-origin: center;
+}
+
+.canvas-shape-x::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.canvas-shape-x::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .canvas-shape.is-selected {
   box-shadow:
     0 0 0 2px rgba(231, 237, 244, 0.95),
@@ -401,6 +426,7 @@ h2 {
 }
 
 .dropdown-shape-chip {
+  position: relative;
   width: 14px;
   height: 14px;
   background: #d5dfeb;
@@ -418,6 +444,32 @@ h2 {
 
 .dropdown-shape-triangle {
   clip-path: polygon(50% 8%, 4% 92%, 96% 92%);
+}
+
+.dropdown-shape-x {
+  background: transparent;
+  border: none;
+}
+
+.dropdown-shape-x::before,
+.dropdown-shape-x::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: 2px;
+  border-radius: 999px;
+  background: #d5dfeb;
+  transform-origin: center;
+}
+
+.dropdown-shape-x::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dropdown-shape-x::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .color-dropdown {
@@ -511,6 +563,7 @@ h2 {
 }
 
 .shape {
+  position: relative;
   width: 72px;
   height: 72px;
   background: linear-gradient(160deg, #26b6c4, #1892d4);
@@ -527,6 +580,31 @@ h2 {
 
 .shape-triangle {
   clip-path: polygon(50% 8%, 4% 92%, 96% 92%);
+}
+
+.shape-x {
+  background: transparent;
+}
+
+.shape-x::before,
+.shape-x::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 86%;
+  height: 9px;
+  border-radius: 999px;
+  background: linear-gradient(160deg, #26b6c4, #1892d4);
+  transform-origin: center;
+}
+
+.shape-x::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.shape-x::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .button-row {

@@ -3,9 +3,10 @@ import ActualStateCanvas, { type CanvasColorOption, type CanvasShape } from '../
 import { palette } from '../design/designTokens'
 
 const sampleShapes: CanvasShape[] = [
-  { id: 'shape-a1', type: 'circle', color: '#1992D4', x: 20, y: 30, size: 64 },
-  { id: 'shape-b2', type: 'triangle', color: '#1CBFAA', x: 48, y: 58, size: 66 },
-  { id: 'shape-c3', type: 'square', color: '#E9A322', x: 76, y: 34, size: 62 },
+  { id: 'shape-1', type: 'circle', color: '#1992D4', x: 18, y: 30, size: 64 },
+  { id: 'shape-2', type: 'triangle', color: '#1CBFAA', x: 42, y: 58, size: 66 },
+  { id: 'shape-3', type: 'square', color: '#E9A322', x: 66, y: 34, size: 62 },
+  { id: 'shape-4', type: 'x', color: '#E8695C', x: 84, y: 56, size: 62 },
 ]
 
 const sampleColors: CanvasColorOption[] = palette.map((swatch) => ({
@@ -30,7 +31,7 @@ function CanvasComponentRoute() {
         title="Actual State Canvas"
         subtitle="Select a shape, pick a color, or delete."
         shapes={sampleShapes}
-        selectedShapeId="shape-b2"
+        selectedShapeId="shape-4"
         colorOptions={sampleColors}
         onSelectShape={noop}
         onDeleteSelected={noop}

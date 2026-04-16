@@ -1,8 +1,8 @@
 import type { FocusEvent } from 'react'
 
-type DesiredShapeType = 'circle' | 'triangle' | 'square'
+export type DesiredShapeType = 'circle' | 'triangle' | 'square' | 'x'
 
-type DesiredShape = {
+export type DesiredShape = {
   id: string
   type: DesiredShapeType
   color: string
@@ -34,6 +34,7 @@ const shapeOptions: Array<{ value: DesiredShapeType; label: string }> = [
   { value: 'circle', label: 'Circle' },
   { value: 'triangle', label: 'Triangle' },
   { value: 'square', label: 'Square' },
+  { value: 'x', label: 'X' },
 ]
 
 function DesiredStateEditor({

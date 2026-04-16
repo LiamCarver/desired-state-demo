@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import DesiredStateEditor from '../components/DesiredStateEditor'
+import DesiredStateEditor, {
+  type DesiredShape,
+  type DesiredShapeType,
+} from '../components/DesiredStateEditor'
 import { palette } from '../design/designTokens'
 
-const initialDesiredShapes = [
+const initialDesiredShapes: DesiredShape[] = [
   { id: 'shape-1', type: 'circle' as const, color: '#1992D4' },
   { id: 'shape-2', type: 'triangle' as const, color: '#1CBFAA' },
   { id: 'shape-3', type: 'square' as const, color: '#E9A322' },
@@ -32,7 +35,7 @@ function DesiredStateEditorComponentRoute() {
     setShapes((current) => current.filter((shape) => shape.id !== shapeId))
   }
 
-  function handleChangeShapeType(shapeId: string, nextType: 'circle' | 'triangle' | 'square') {
+  function handleChangeShapeType(shapeId: string, nextType: DesiredShapeType) {
     setShapes((current) =>
       current.map((shape) => (shape.id === shapeId ? { ...shape, type: nextType } : shape)),
     )

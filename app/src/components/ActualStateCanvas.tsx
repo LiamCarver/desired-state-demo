@@ -1,4 +1,4 @@
-export type CanvasShapeType = 'circle' | 'triangle' | 'square'
+export type CanvasShapeType = 'circle' | 'triangle' | 'square' | 'x'
 
 export type CanvasShape = {
   id: string
@@ -46,6 +46,7 @@ function ActualStateCanvas({
         {shapes.map((shape) => {
           const shapeClass = `canvas-shape canvas-shape-${shape.type}`
           const isSelected = shape.id === selectedShapeId
+          const isXShape = shape.type === 'x'
           return (
             <button
               key={shape.id}
@@ -59,7 +60,8 @@ function ActualStateCanvas({
                 top: `${shape.y}%`,
                 width: `${shape.size}px`,
                 height: `${shape.size}px`,
-                backgroundColor: shape.color,
+                backgroundColor: isXShape ? 'transparent' : shape.color,
+                color: shape.color,
               }}
               onClick={() => onSelectShape(shape.id)}
             />
