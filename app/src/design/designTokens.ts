@@ -20,6 +20,6 @@ export const shapeSpecs: ShapeSpec[] = [
 export const palette: PaletteSwatch[] = [
   { name: 'Ocean', value: '#1992D4' },
   { name: 'Mint', value: '#1CBFAA' },
-  { name: 'Amber', value: '#E9A322' },
+  { name: 'Purple', value: '#C77DFF' },
   { name: 'Coral', value: '#E8695C' },
 ]

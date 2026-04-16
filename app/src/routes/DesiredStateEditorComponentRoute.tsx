@@ -9,7 +9,7 @@ import { palette } from '../design/designTokens'
 const initialDesiredShapes: DesiredShape[] = [
   { id: 'shape-1', type: 'circle' as const, color: '#1992D4' },
   { id: 'shape-2', type: 'triangle' as const, color: '#1CBFAA' },
-  { id: 'shape-3', type: 'square' as const, color: '#E9A322' },
+  { id: 'shape-3', type: 'square' as const, color: '#C77DFF' },
 ]
 
 const sampleColors = palette.map((swatch) => ({

@@ -1,13 +1,24 @@
 import { shapeSpecs } from '../design/designTokens'
-import ShapeGlyph from './ShapeGlyph'
+import ShapeButtonShell from './ShapeButtonShell'
+
+const shapePreviewColors = {
+  circle: '#FF6B6B',
+  triangle: '#52D39B',
+  square: '#C77DFF',
+  x: '#4FA7FF',
+} as const
 
 function ShapeGallery() {
   return (
     <div className="shape-grid">
       {shapeSpecs.map((shape) => (
         <article key={shape.id} className="shape-card">
-          <ShapeGlyph type={shape.id} className="shape-glyph-preview" strokeWidth={2.6} />
-          <p>{shape.label}</p>
+          <ShapeButtonShell
+            type={shape.id}
+            color={shapePreviewColors[shape.id]}
+            size={72}
+            glyphStrokeWidth={2.5}
+          />
         </article>
       ))}
     </div>

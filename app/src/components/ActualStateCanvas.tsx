@@ -1,5 +1,5 @@
 import type { ShapeType } from '../design/shapeTypes'
-import ShapeGlyph from './ShapeGlyph'
+import ShapeButtonShell from './ShapeButtonShell'
 
 export type CanvasShapeType = ShapeType
 
@@ -60,13 +60,10 @@ function ActualStateCanvas({
               style={{
                 left: `${shape.x}%`,
                 top: `${shape.y}%`,
-                width: `${shape.size}px`,
-                height: `${shape.size}px`,
-                color: shape.color,
               }}
               onClick={() => onSelectShape(shape.id)}
             >
-              <ShapeGlyph type={shape.type} className="canvas-shape-glyph" strokeWidth={2.6} />
+              <ShapeButtonShell type={shape.type} color={shape.color} size={shape.size} />
             </button>
           )
         })}
