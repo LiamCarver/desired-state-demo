@@ -30,7 +30,7 @@
 
 ## Phase 4: Animations + UX Polish
 - Add per-action transitions (create/update/delete).
-- Improve monitor clarity (pulse/tick/action details).
+- Improve toast clarity (timing, stacking, wording).
 - Refine layout for mobile and desktop readability.
 - Atomic tasks:
   - Add animation hooks by action type.

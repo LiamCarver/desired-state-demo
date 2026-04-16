@@ -12,6 +12,7 @@
   - `reconcileIntervalMs`
   - `lastDiffSummary`
   - `eventLog`
+  - `activeToasts`
 
 ## Reconciliation Logic
 - Pure diff function:
@@ -22,24 +23,23 @@
   - Output: next actual
 - Loop runner:
   - Triggers diff/apply on timer when running.
-  - Emits monitor metadata for UI.
+  - Emits event payloads for toasts/log.
 
 ## Component Structure
 - `AppShell`
 - `DesiredStateEditor`
-- `ActualStateEditor` (for drift simulation)
-- `CanvasRenderer` (shows actual shapes)
+- `ToastLayer` (center column: ephemeral event messages)
+- `ActualStateCanvas` (shows actual shapes and supports direct drift edits)
 - `DiffPanel` (optional, phase-gated)
-- `ReconcilerMonitor` (status, tick, last action)
 - `ControlBar` (pause/resume, speed, step)
 - `EventLogPanel`
 
 ## Data Flow
 - User intent updates desired state.
-- User drift actions update actual state directly.
+- User drift actions originate from canvas interactions and update actual state directly.
 - Reconciler reads both states and writes only actual state.
-- Renderer subscribes to actual state.
-- Monitor/log subscribe to reconciliation outputs.
+- Canvas subscribes to actual state and emits edit/delete/color-change events.
+- Toast layer and log subscribe to reconciliation/drift outputs.
 
 ## Separation Rules
 - UI components do not contain diff logic.

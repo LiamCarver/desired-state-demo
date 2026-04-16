@@ -29,11 +29,11 @@
 2. Compute diff.
 3. If no diff:
    - Mark status as `in sync`.
-   - Emit no-op monitor/log event.
+   - Emit concise `in-sync` toast/log event.
 4. If diff exists:
    - Select next action by policy.
    - Apply action to actual state.
-   - Emit monitor/log event with action detail.
+   - Emit toast/log event with action detail.
 
 ## Delay and Animation Behavior
 - Reconcile interval is user-configurable (e.g., 250ms, 750ms, 1500ms).
