@@ -219,6 +219,7 @@ h2 {
 }
 
 .ps-shape-shell {
+  position: relative;
   border: 1px solid rgba(231, 237, 244, 0.16);
   border-radius: 999px;
   background: radial-gradient(circle at 35% 28%, #263240, #0c1118 62%);
@@ -230,6 +231,17 @@ h2 {
     0 10px 20px rgba(4, 9, 15, 0.52);
 }
 
+.ps-shape-shell::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid rgba(231, 237, 244, 0);
+  box-shadow: 0 0 0 0 rgba(231, 237, 244, 0);
+  opacity: 0;
+  pointer-events: none;
+}
+
 .ps-shape-glyph {
   width: 72%;
   height: 72%;
@@ -238,11 +250,76 @@ h2 {
 }
 
 .canvas-shape.is-selected .ps-shape-shell {
+  border-color: rgba(231, 237, 244, 0.45);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     inset 0 -2px 10px rgba(0, 0, 0, 0.42),
-    0 0 0 2px rgba(231, 237, 244, 0.95),
+    0 0 0 1px rgba(231, 237, 244, 0.38),
     0 12px 28px rgba(4, 9, 15, 0.55);
+  animation: canvas-shape-border-flash 520ms ease-out;
+}
+
+ .canvas-shape.is-selected .ps-shape-shell::after {
+  animation: canvas-shape-border-ripple 980ms cubic-bezier(0.16, 0.84, 0.3, 1) 1;
+}
+
+@keyframes canvas-shape-border-flash {
+  from {
+    border-color: rgba(231, 237, 244, 0.15);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.42),
+      0 0 0 0 rgba(231, 237, 244, 0.1),
+      0 10px 20px rgba(4, 9, 15, 0.52);
+  }
+
+  55% {
+    border-color: rgba(231, 237, 244, 0.7);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.42),
+      0 0 0 2px rgba(231, 237, 244, 0.48),
+      0 14px 30px rgba(4, 9, 15, 0.58);
+  }
+
+  100% {
+    border-color: rgba(231, 237, 244, 0.45);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(231, 237, 244, 0.38),
+      0 12px 28px rgba(4, 9, 15, 0.55);
+  }
+}
+
+@keyframes canvas-shape-border-ripple {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+    border-color: rgba(231, 237, 244, 0.42);
+    box-shadow: 0 0 0 0 rgba(231, 237, 244, 0.28);
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.46);
+    border-color: rgba(231, 237, 244, 0);
+    box-shadow: 0 0 0 16px rgba(231, 237, 244, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas-shape.is-selected .ps-shape-shell {
+    animation: none;
+  }
+
+  .canvas-shape.is-selected .ps-shape-shell::after {
+    animation: none;
+  }
 }
 
 .canvas-toolbar {
