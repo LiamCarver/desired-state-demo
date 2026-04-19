@@ -17,6 +17,7 @@
 - [Fresh Context Handoff](./fresh-context-handoff.md)
 - [Current Implementation](./current-implementation.md)
 - [UI Decisions](./ui-decisions.md)
+- [Planning Docs: Canvas, Hooks, and State Management](./plans/README.md)
 
 ## Execution Order
 1. Align on concept definitions and assumptions:

@@ -225,10 +225,22 @@ h2 {
   background: radial-gradient(circle at 35% 28%, #263240, #0c1118 62%);
   display: grid;
   place-items: center;
+  transition: color 260ms cubic-bezier(0.2, 0.85, 0.32, 1);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     inset 0 -2px 10px rgba(0, 0, 0, 0.42),
     0 10px 20px rgba(4, 9, 15, 0.52);
+}
+
+.ps-shape-shell::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid currentColor;
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
 }
 
 .ps-shape-shell::after {
@@ -247,6 +259,14 @@ h2 {
   height: 72%;
   color: currentColor;
   filter: drop-shadow(0 1px 5px rgba(4, 9, 15, 0.45));
+}
+
+.canvas-shape.is-color-changing .ps-shape-shell {
+  animation: canvas-shape-color-pop 560ms cubic-bezier(0.2, 0.8, 0.32, 1);
+}
+
+.canvas-shape.is-color-changing .ps-shape-shell::before {
+  animation: canvas-shape-color-ring 560ms cubic-bezier(0.16, 0.84, 0.3, 1);
 }
 
 .canvas-shape.is-selected .ps-shape-shell {
@@ -312,7 +332,81 @@ h2 {
   }
 }
 
+@keyframes canvas-shape-color-pop {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1) saturate(1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.42),
+      0 10px 20px rgba(4, 9, 15, 0.52);
+  }
+
+  16% {
+    transform: scale(1.04) rotate(-1deg);
+    filter: brightness(1.35) saturate(1.18);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.42),
+      0 0 0 2px rgba(255, 255, 255, 0.22),
+      0 14px 26px rgba(4, 9, 15, 0.58);
+  }
+
+  42% {
+    transform: scale(1.12) rotate(1.2deg);
+    filter: brightness(1.08) saturate(1.1);
+  }
+
+  72% {
+    transform: scale(0.97) rotate(-0.5deg);
+    filter: brightness(0.96) saturate(1);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1) saturate(1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.42),
+      0 10px 20px rgba(4, 9, 15, 0.52);
+  }
+}
+
+@keyframes canvas-shape-color-ring {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+    border-color: rgba(255, 255, 255, 0.85);
+  }
+
+  20% {
+    opacity: 0.6;
+    transform: scale(0.94);
+    border-color: color-mix(in srgb, currentColor 55%, white);
+  }
+
+  55% {
+    opacity: 0.34;
+    transform: scale(1.16);
+    border-color: currentColor;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.52);
+    border-color: currentColor;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .canvas-shape.is-color-changing .ps-shape-shell {
+    animation: none;
+  }
+
+  .canvas-shape.is-color-changing .ps-shape-shell::before {
+    animation: none;
+  }
+
   .canvas-shape.is-selected .ps-shape-shell {
     animation: none;
   }

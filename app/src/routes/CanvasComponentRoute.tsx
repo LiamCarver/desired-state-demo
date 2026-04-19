@@ -1,24 +1,9 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import ActualStateCanvas, { type CanvasColorOption, type CanvasShape } from '../components/ActualStateCanvas'
-import { palette } from '../design/designTokens'
-
-const sampleShapes: CanvasShape[] = [
-  { id: 'shape-1', type: 'circle', color: '#FF6B6B', x: 18, y: 30, size: 64 },
-  { id: 'shape-2', type: 'triangle', color: '#52D39B', x: 42, y: 58, size: 66 },
-  { id: 'shape-3', type: 'square', color: '#C77DFF', x: 66, y: 34, size: 62 },
-  { id: 'shape-4', type: 'x', color: '#4FA7FF', x: 84, y: 56, size: 62 },
-]
-
-const sampleColors: CanvasColorOption[] = palette.map((swatch) => ({
-  name: swatch.name,
-  value: swatch.value,
-}))
-
-function noop() {}
+import ActualStateCanvas from '../components/ActualStateCanvas'
+import { useCanvasController } from '../features/canvas/hooks/useCanvasController'
 
 function CanvasComponentRoute() {
-  const [selectedShapeId, setSelectedShapeId] = useState<string | undefined>(undefined)
+  const canvasController = useCanvasController()
 
   return (
     <main className="design-page">
@@ -33,13 +18,14 @@ function CanvasComponentRoute() {
       <ActualStateCanvas
         title="Actual State Canvas"
         subtitle="Select a shape, pick a color, or delete."
-        shapes={sampleShapes}
-        selectedShapeId={selectedShapeId}
-        colorOptions={sampleColors}
-        onSelectShape={setSelectedShapeId}
-        onClearSelection={() => setSelectedShapeId(undefined)}
-        onDeleteSelected={noop}
-        onSelectColor={noop}
+        shapes={canvasController.shapes}
+        selectedShapeId={canvasController.selectedShapeId}
+        colorChangingShapeId={canvasController.colorChangingShapeId}
+        colorOptions={canvasController.colorOptions}
+        onSelectShape={canvasController.onSelectShape}
+        onClearSelection={canvasController.onClearSelection}
+        onDeleteSelected={canvasController.onDeleteSelected}
+        onSelectColor={canvasController.onSelectColor}
       />
 
       <div className="inline-actions">

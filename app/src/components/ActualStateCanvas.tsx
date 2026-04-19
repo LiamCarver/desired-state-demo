@@ -22,6 +22,7 @@ type ActualStateCanvasProps = {
   subtitle: string
   shapes: CanvasShape[]
   selectedShapeId?: string
+  colorChangingShapeId?: string
   colorOptions: CanvasColorOption[]
   onSelectShape: (shapeId: string) => void
   onClearSelection: () => void
@@ -34,6 +35,7 @@ function ActualStateCanvas({
   subtitle,
   shapes,
   selectedShapeId,
+  colorChangingShapeId,
   colorOptions,
   onSelectShape,
   onClearSelection,
@@ -62,6 +64,7 @@ function ActualStateCanvas({
         {shapes.map((shape) => {
           const shapeClass = `canvas-shape canvas-shape-${shape.type}`
           const isSelected = shape.id === selectedShapeId
+          const isColorChanging = shape.id === colorChangingShapeId
           return (
             <button
               key={shape.id}
@@ -69,7 +72,7 @@ function ActualStateCanvas({
               role="listitem"
               aria-label={`Select ${shape.id}`}
               aria-pressed={isSelected}
-              className={`${shapeClass}${isSelected ? ' is-selected' : ''}`}
+              className={`${shapeClass}${isSelected ? ' is-selected' : ''}${isColorChanging ? ' is-color-changing' : ''}`}
               style={{
                 left: `${shape.x}%`,
                 top: `${shape.y}%`,
@@ -103,8 +106,8 @@ function ActualStateCanvas({
         <button
           type="button"
           className="btn-shell-only"
-          aria-label="Delete selected shape"
-          title="Delete selected shape"
+          aria-label="Delete Selected"
+          title="Delete Selected"
           onClick={onDeleteSelected}
         >
           <span className="action-shell" style={{ color: '#FF6B6B' }}>

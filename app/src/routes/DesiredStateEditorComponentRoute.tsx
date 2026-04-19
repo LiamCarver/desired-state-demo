@@ -1,51 +1,9 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import DesiredStateEditor, {
-  type DesiredShape,
-  type DesiredShapeType,
-} from '../components/DesiredStateEditor'
-import { palette } from '../design/designTokens'
-
-const initialDesiredShapes: DesiredShape[] = [
-  { id: 'shape-1', type: 'circle' as const, color: '#1992D4' },
-  { id: 'shape-2', type: 'triangle' as const, color: '#1CBFAA' },
-  { id: 'shape-3', type: 'square' as const, color: '#C77DFF' },
-]
-
-const sampleColors = palette.map((swatch) => ({
-  name: swatch.name,
-  value: swatch.value,
-}))
+import DesiredStateEditor from '../components/DesiredStateEditor'
+import { useDesiredStateEditorController } from '../features/desired-state/hooks/useDesiredStateEditorController'
 
 function DesiredStateEditorComponentRoute() {
-  const [shapes, setShapes] = useState(initialDesiredShapes)
-
-  function handleAddShape() {
-    setShapes((current) => [
-      ...current,
-      {
-        id: `shape-${current.length + 1}`,
-        type: 'circle',
-        color: sampleColors[0].value,
-      },
-    ])
-  }
-
-  function handleRemoveShape(shapeId: string) {
-    setShapes((current) => current.filter((shape) => shape.id !== shapeId))
-  }
-
-  function handleChangeShapeType(shapeId: string, nextType: DesiredShapeType) {
-    setShapes((current) =>
-      current.map((shape) => (shape.id === shapeId ? { ...shape, type: nextType } : shape)),
-    )
-  }
-
-  function handleChangeShapeColor(shapeId: string, nextColor: string) {
-    setShapes((current) =>
-      current.map((shape) => (shape.id === shapeId ? { ...shape, color: nextColor } : shape)),
-    )
-  }
+  const editorController = useDesiredStateEditorController()
 
   return (
     <main className="design-page">
@@ -60,12 +18,12 @@ function DesiredStateEditorComponentRoute() {
       <DesiredStateEditor
         title="Desired State"
         subtitle="Edit target shapes by type and color."
-        shapes={shapes}
-        colorOptions={sampleColors}
-        onAddShape={handleAddShape}
-        onRemoveShape={handleRemoveShape}
-        onChangeShapeType={handleChangeShapeType}
-        onChangeShapeColor={handleChangeShapeColor}
+        shapes={editorController.shapes}
+        colorOptions={editorController.colorOptions}
+        onAddShape={editorController.onAddShape}
+        onRemoveShape={editorController.onRemoveShape}
+        onChangeShapeType={editorController.onChangeShapeType}
+        onChangeShapeColor={editorController.onChangeShapeColor}
       />
 
       <div className="inline-actions">
