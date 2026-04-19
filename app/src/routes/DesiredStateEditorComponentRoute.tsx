@@ -20,10 +20,9 @@ function DesiredStateEditorComponentRoute() {
         subtitle="Edit target shapes by type and color."
         shapes={editorController.shapes}
         colorOptions={editorController.colorOptions}
-        onAddShape={editorController.onAddShape}
+        onCreateShape={editorController.onCreateShape}
         onRemoveShape={editorController.onRemoveShape}
-        onChangeShapeType={editorController.onChangeShapeType}
-        onChangeShapeColor={editorController.onChangeShapeColor}
+        onUpdateShape={editorController.onUpdateShape}
       />
 
       <div className="inline-actions">

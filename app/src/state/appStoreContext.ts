@@ -12,14 +12,14 @@ export type AppAction =
   | { type: 'actual/select-shape'; shapeId?: string }
   | { type: 'actual/delete-selected' }
   | { type: 'actual/set-selected-color'; color: string }
-  | { type: 'desired/add-shape' }
+  | { type: 'desired/add-shape'; nextType: ShapeType; nextColor: string }
   | { type: 'desired/remove-shape'; shapeId: string }
   | { type: 'desired/set-shape-type'; shapeId: string; nextType: ShapeType }
   | { type: 'desired/set-shape-color'; shapeId: string; nextColor: string }
 
 export const initialState: AppState = {
   desiredState: [
-    { id: 'shape-1', type: 'circle', color: '#1992D4' },
+    { id: 'shape-1', type: 'circle', color: '#E8695C' },
     { id: 'shape-2', type: 'triangle', color: '#1CBFAA' },
     { id: 'shape-3', type: 'square', color: '#C77DFF' },
   ],
@@ -54,18 +54,24 @@ export function appReducer(state: AppState, action: AppAction): AppState {
           shape.id === state.selectedActualShapeId ? { ...shape, color: action.color } : shape,
         ),
       }
-    case 'desired/add-shape':
+    case 'desired/add-shape': {
+      const nextShapeNumber =
+        state.desiredState.reduce((max, shape) => {
+          const numericId = Number(shape.id.replace('shape-', ''))
+          return Number.isNaN(numericId) ? max : Math.max(max, numericId)
+        }, 0) + 1
       return {
         ...state,
         desiredState: [
           ...state.desiredState,
           {
-            id: `shape-${state.desiredState.length + 1}`,
-            type: 'circle',
-            color: '#E8695C',
+            id: `shape-${nextShapeNumber}`,
+            type: action.nextType,
+            color: action.nextColor,
           },
         ],
       }
+    }
     case 'desired/remove-shape':
       return {
         ...state,

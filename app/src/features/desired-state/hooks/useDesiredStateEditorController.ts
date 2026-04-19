@@ -11,28 +11,24 @@ export function useDesiredStateEditorController() {
   const { desiredState } = useAppState()
   const dispatch = useAppDispatch()
 
-  function onAddShape() {
-    dispatch({ type: 'desired/add-shape' })
+  function onCreateShape(nextType: ShapeType, nextColor: string) {
+    dispatch({ type: 'desired/add-shape', nextType, nextColor })
   }
 
   function onRemoveShape(shapeId: string) {
     dispatch({ type: 'desired/remove-shape', shapeId })
   }
 
-  function onChangeShapeType(shapeId: string, nextType: ShapeType) {
+  function onUpdateShape(shapeId: string, nextType: ShapeType, nextColor: string) {
     dispatch({ type: 'desired/set-shape-type', shapeId, nextType })
-  }
-
-  function onChangeShapeColor(shapeId: string, nextColor: string) {
     dispatch({ type: 'desired/set-shape-color', shapeId, nextColor })
   }
 
   return {
     shapes: desiredState,
     colorOptions,
-    onAddShape,
+    onCreateShape,
     onRemoveShape,
-    onChangeShapeType,
-    onChangeShapeColor,
+    onUpdateShape,
   }
 }

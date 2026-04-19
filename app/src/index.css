@@ -591,6 +591,30 @@ h2 {
   letter-spacing: 0.01em;
 }
 
+.editor-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.editor-summary-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--stroke);
+  border-radius: 999px;
+  background: rgba(11, 17, 24, 0.75);
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.editor-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
 .editor-controls {
   display: grid;
   gap: 0.65rem;
@@ -726,6 +750,123 @@ h2 {
   border-radius: 2px;
   border: 1px solid rgba(255, 255, 255, 0.45);
   flex-shrink: 0;
+}
+
+.editor-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 9, 15, 0.66);
+  padding: 1rem;
+}
+
+.editor-modal {
+  width: min(640px, 100%);
+  border: 1px solid var(--stroke-strong);
+  border-radius: 14px;
+  background: linear-gradient(165deg, var(--panel-grad-top), var(--panel-grad-bottom));
+  box-shadow: 0 18px 44px rgba(4, 9, 15, 0.58);
+  padding: 1rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.editor-modal-header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.editor-modal-header h3 {
+  margin: 0;
+  font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.editor-modal-header p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.editor-modal-body {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.editor-modal-section {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.editor-modal-section h4 {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.editor-shape-selector {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.editor-shape-option {
+  border: 1px solid var(--stroke);
+  border-radius: 10px;
+  background: rgba(11, 17, 24, 0.8);
+  color: var(--text-main);
+  cursor: pointer;
+  min-height: 62px;
+  padding: 0.45rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-align: left;
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    transform 120ms ease;
+}
+
+.editor-shape-option:hover {
+  transform: translateY(-1px);
+}
+
+.editor-shape-option.is-selected {
+  border-color: rgba(231, 237, 244, 0.52);
+  background: rgba(24, 37, 50, 0.9);
+}
+
+.editor-shape-option:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
+.editor-modal-color-list {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.editor-modal-color-list .canvas-color-chip {
+  opacity: 1;
+  transform: none;
+}
+
+.editor-modal-color-list .canvas-color-chip.is-selected {
+  border-color: rgba(231, 237, 244, 0.64);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(231, 237, 244, 0.26),
+    0 10px 20px rgba(4, 9, 15, 0.48);
+}
+
+.editor-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.55rem;
 }
 
 .color-dropdown-menu {

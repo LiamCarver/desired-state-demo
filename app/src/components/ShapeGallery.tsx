@@ -2,7 +2,7 @@ import { shapeSpecs } from '../design/designTokens'
 import ShapeButtonShell from './ShapeButtonShell'
 
 const shapePreviewColors = {
-  circle: '#FF6B6B',
+  circle: '#E8695C',
   triangle: '#52D39B',
   square: '#C77DFF',
   x: '#4FA7FF',
