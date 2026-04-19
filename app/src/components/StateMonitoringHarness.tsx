@@ -133,8 +133,14 @@ function StateMonitoringHarness() {
   }
 
   useEffect(() => {
-    if (driftSummary.status !== previousStatusRef.current && driftSummary.status === 'out-of-sync') {
-      pushToast('out-of-sync', `Out of sync: ${driftSummary.issue} ${driftSummary.fix}`)
+    if (driftSummary.status !== previousStatusRef.current) {
+      if (driftSummary.status === 'out-of-sync') {
+        pushToast('out-of-sync', `Out of sync: ${driftSummary.issue} ${driftSummary.fix}`)
+      }
+
+      if (driftSummary.status === 'in-sync' && previousStatusRef.current === 'out-of-sync') {
+        pushToast('in-sync', 'Synchronized.')
+      }
     }
     previousStatusRef.current = driftSummary.status
   }, [driftSummary])
@@ -142,9 +148,6 @@ function StateMonitoringHarness() {
   useEffect(() => {
     const timerId = window.setInterval(() => {
       const currentDrift = summarizeDrift(desiredRef.current, actualRef.current)
-      if (currentDrift.status === 'out-of-sync') {
-        pushToast('out-of-sync', `Reconciling: ${currentDrift.issue} ${currentDrift.fix}`)
-      }
       dispatch({ type: 'actual/reconcile-step' })
     }, RECONCILE_INTERVAL_MS)
 
@@ -163,7 +166,7 @@ function StateMonitoringHarness() {
     <section className="state-flow-grid" aria-label="State monitoring harness">
       <DesiredStateEditor
         title="Desired State"
-        subtitle="Create, update, and remove shapes via store actions."
+        subtitle="Update desired shapes."
         shapes={desiredEditorController.shapes}
         colorOptions={desiredEditorController.colorOptions}
         fixedHeight={true}
@@ -180,7 +183,8 @@ function StateMonitoringHarness() {
       <div className="monitor-column">
         <section className="monitor-card" aria-label="State monitoring component">
           <header className="monitor-card-header">
-            <h2>Monitoring</h2>
+            <h2>Monitor</h2>
+            <p>Syncs current state from desired state.</p>
           </header>
 
           <div className={`monitor-indicator ${isInSync ? 'is-in-sync' : 'is-out-of-sync'}`}>
@@ -197,8 +201,8 @@ function StateMonitoringHarness() {
       </div>
 
       <ActualStateCanvas
-        title="Actual State Canvas"
-        subtitle="Reconciler applies desired deltas on a 2-second timer."
+        title="Current State"
+        subtitle="Patched from desired state."
         shapes={canvasController.shapes}
         selectedShapeId={canvasController.selectedShapeId}
         colorChangingShapeId={canvasController.colorChangingShapeId}

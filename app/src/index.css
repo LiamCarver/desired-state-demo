@@ -804,7 +804,7 @@ h2 {
 }
 
 .editor-card.is-fixed-height {
-  height: 940px;
+  height: 880px;
   grid-template-rows: auto auto minmax(0, 1fr);
 }
 
@@ -827,6 +827,13 @@ h2 {
   min-height: 0;
   overflow-y: hidden;
   padding-right: 0;
+  align-content: start;
+  grid-auto-rows: 164px;
+}
+
+.editor-card.is-fixed-height .editor-row {
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr) auto;
 }
 
 .editor-row {

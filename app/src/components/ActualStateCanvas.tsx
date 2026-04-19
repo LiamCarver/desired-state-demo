@@ -238,6 +238,7 @@ function ActualStateCanvas({
           aria-label="Delete Selected"
           title="Delete Selected"
           onClick={onDeleteSelected}
+          disabled={!hasSelection}
         >
           <span className="action-shell" style={{ color: '#FF6B6B' }}>
             <svg className="action-icon" viewBox="0 0 24 24" aria-hidden="true">
