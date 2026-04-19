@@ -206,18 +206,35 @@ h2 {
 
 .canvas-shape {
   position: absolute;
-  transform: translate(-50%, -50%);
+  --shape-scale: 1;
+  transform: translate(-50%, -50%) scale(var(--shape-scale));
   border: none;
   background: transparent;
   cursor: pointer;
   padding: 0;
   display: grid;
   place-items: center;
-  transition: transform 120ms ease;
+  opacity: 1;
+  transition:
+    left 260ms cubic-bezier(0.2, 0.84, 0.32, 1),
+    top 260ms cubic-bezier(0.2, 0.84, 0.32, 1),
+    transform 180ms ease,
+    opacity 220ms ease;
 }
 
 .canvas-shape:hover {
-  transform: translate(-50%, -50%) scale(1.08);
+  --shape-scale: 1.08;
+}
+
+.canvas-shape.is-entering {
+  opacity: 0;
+  --shape-scale: 0.72;
+}
+
+.canvas-shape.is-exiting {
+  opacity: 0;
+  --shape-scale: 0.72;
+  pointer-events: none;
 }
 
 .canvas-shape:focus-visible {
@@ -423,6 +440,10 @@ h2 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .canvas-shape {
+    transition: none;
+  }
+
   .canvas-shape.is-color-changing .ps-shape-shell {
     animation: none;
   }

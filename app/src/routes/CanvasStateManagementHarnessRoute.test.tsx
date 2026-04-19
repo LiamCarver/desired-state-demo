@@ -40,6 +40,12 @@ describe('Canvas state management harness', () => {
 
     expect(screen.getByRole('listitem', { name: 'Select shape-5' })).toBeInTheDocument()
     expect(screen.getByRole('listitem', { name: 'Select shape-1' })).toHaveClass('canvas-shape-triangle')
+    expect(screen.getByRole('listitem', { name: 'Select shape-2' })).toHaveClass('is-exiting')
+
+    act(() => {
+      vi.advanceTimersByTime(260)
+    })
+
     expect(screen.queryByRole('listitem', { name: 'Select shape-2' })).not.toBeInTheDocument()
   })
 
@@ -48,6 +54,10 @@ describe('Canvas state management harness', () => {
 
     const shapeOne = screen.getByRole('listitem', { name: 'Select shape-1' })
     expect(shapeOne).not.toHaveClass('is-color-changing')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Edit shape-1' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Set shape color to Ocean' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Save Shape' }))
 
     act(() => {
       vi.advanceTimersByTime(2_000)

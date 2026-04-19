@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import type { ShapeType } from '../design/shapeTypes'
 import ShapeButtonShell from './ShapeButtonShell'
 
@@ -32,6 +33,15 @@ type ActualStateCanvasProps = {
   onSelectColor: (colorValue: string) => void
 }
 
+const SHAPE_ENTER_ANIMATION_MS = 260
+const SHAPE_EXIT_ANIMATION_MS = 260
+
+type RenderPhase = 'steady' | 'entering' | 'exiting'
+
+type RenderedShape = CanvasShape & {
+  phase: RenderPhase
+}
+
 function getGridPosition(index: number, total: number) {
   if (total <= 0) {
     return { x: 50, y: 50 }
@@ -50,6 +60,19 @@ function getGridPosition(index: number, total: number) {
   }
 }
 
+function withPosition(shape: CanvasShape, index: number, total: number, useGridLayout: boolean): CanvasShape {
+  if (!useGridLayout) {
+    return shape
+  }
+
+  const position = getGridPosition(index, total)
+  return {
+    ...shape,
+    x: position.x,
+    y: position.y,
+  }
+}
+
 function ActualStateCanvas({
   title,
   subtitle,
@@ -65,6 +88,89 @@ function ActualStateCanvas({
   onSelectColor,
 }: ActualStateCanvasProps) {
   const hasSelection = Boolean(selectedShapeId)
+  const [renderedShapes, setRenderedShapes] = useState<RenderedShape[]>(() =>
+    shapes.map((shape, index) => ({
+      ...withPosition(shape, index, shapes.length, useGridLayout),
+      phase: 'steady',
+    })),
+  )
+  const hasMountedRef = useRef(false)
+
+  useEffect(() => {
+    const positionedIncoming = shapes.map((shape, index) => withPosition(shape, index, shapes.length, useGridLayout))
+    const incomingById = new Map(positionedIncoming.map((shape) => [shape.id, shape]))
+
+    setRenderedShapes((previousShapes) => {
+      const nextById = new Map<string, RenderedShape>()
+
+      previousShapes.forEach((shape) => {
+        const incomingShape = incomingById.get(shape.id)
+        if (!incomingShape) {
+          nextById.set(shape.id, { ...shape, phase: 'exiting' })
+          return
+        }
+
+        nextById.set(shape.id, {
+          ...incomingShape,
+          phase: shape.phase === 'exiting' ? 'steady' : shape.phase,
+        })
+      })
+
+      positionedIncoming.forEach((shape) => {
+        if (!nextById.has(shape.id)) {
+          nextById.set(shape.id, {
+            ...shape,
+            phase: hasMountedRef.current ? 'entering' : 'steady',
+          })
+        }
+      })
+
+      const inOrder = positionedIncoming
+        .map((shape) => nextById.get(shape.id))
+        .filter((shape): shape is RenderedShape => Boolean(shape))
+      const exiting = previousShapes
+        .map((shape) => nextById.get(shape.id))
+        .filter((shape): shape is RenderedShape => Boolean(shape) && shape.phase === 'exiting')
+
+      return [...inOrder, ...exiting]
+    })
+
+    hasMountedRef.current = true
+  }, [shapes, useGridLayout])
+
+  useEffect(() => {
+    const hasEnteringShapes = renderedShapes.some((shape) => shape.phase === 'entering')
+    if (!hasEnteringShapes) {
+      return
+    }
+
+    const timeout = window.setTimeout(() => {
+      setRenderedShapes((previousShapes) =>
+        previousShapes.map((shape) => (shape.phase === 'entering' ? { ...shape, phase: 'steady' } : shape)),
+      )
+    }, 16)
+
+    return () => {
+      window.clearTimeout(timeout)
+    }
+  }, [renderedShapes])
+
+  useEffect(() => {
+    const exitingShapeIds = renderedShapes.filter((shape) => shape.phase === 'exiting').map((shape) => shape.id)
+    if (exitingShapeIds.length === 0) {
+      return
+    }
+
+    const timeout = window.setTimeout(() => {
+      setRenderedShapes((previousShapes) =>
+        previousShapes.filter((shape) => !(shape.phase === 'exiting' && exitingShapeIds.includes(shape.id))),
+      )
+    }, SHAPE_EXIT_ANIMATION_MS)
+
+    return () => {
+      window.clearTimeout(timeout)
+    }
+  }, [renderedShapes])
 
   return (
     <section className="canvas-card" aria-label="Actual state canvas component">
@@ -83,11 +189,10 @@ function ActualStateCanvas({
           }
         }}
       >
-        {shapes.map((shape, index) => {
+        {renderedShapes.map((shape) => {
           const shapeClass = `canvas-shape canvas-shape-${shape.type}`
           const isSelected = shape.id === selectedShapeId
           const isColorChanging = shape.id === colorChangingShapeId
-          const position = useGridLayout ? getGridPosition(index, shapes.length) : { x: shape.x, y: shape.y }
           return (
             <button
               key={shape.id}
@@ -95,10 +200,10 @@ function ActualStateCanvas({
               role="listitem"
               aria-label={`Select ${shape.id}`}
               aria-pressed={isSelected}
-              className={`${shapeClass}${isSelected ? ' is-selected' : ''}${isColorChanging ? ' is-color-changing' : ''}`}
+              className={`${shapeClass}${isSelected ? ' is-selected' : ''}${isColorChanging ? ' is-color-changing' : ''}${shape.phase === 'entering' ? ' is-entering' : ''}${shape.phase === 'exiting' ? ' is-exiting' : ''}`}
               style={{
-                left: `${position.x}%`,
-                top: `${position.y}%`,
+                left: `${shape.x}%`,
+                top: `${shape.y}%`,
               }}
               onClick={() => onSelectShape(shape.id)}
             >
