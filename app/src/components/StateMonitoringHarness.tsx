@@ -8,8 +8,8 @@ import { useAppDispatch, useAppState } from '../state/useAppStore'
 import type { ActualShape, DesiredShape } from '../state/types'
 
 const RECONCILE_INTERVAL_MS = 2000
-const TOAST_DURATION_MS = 2600
-const TOAST_EXIT_DURATION_MS = 240
+const TOAST_DURATION_MS = 4000
+const TOAST_EXIT_DURATION_MS = 1000
 const MAX_TOASTS = 4
 
 type MonitorStatus = 'in-sync' | 'out-of-sync'
@@ -133,13 +133,8 @@ function StateMonitoringHarness() {
   }
 
   useEffect(() => {
-    if (driftSummary.status !== previousStatusRef.current) {
-      pushToast(
-        driftSummary.status,
-        driftSummary.status === 'in-sync'
-          ? `In sync: ${driftSummary.issue}`
-          : `Out of sync: ${driftSummary.issue} ${driftSummary.fix}`,
-      )
+    if (driftSummary.status !== previousStatusRef.current && driftSummary.status === 'out-of-sync') {
+      pushToast('out-of-sync', `Out of sync: ${driftSummary.issue} ${driftSummary.fix}`)
     }
     previousStatusRef.current = driftSummary.status
   }, [driftSummary])

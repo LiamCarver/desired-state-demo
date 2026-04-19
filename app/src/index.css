@@ -267,6 +267,7 @@ h2 {
 }
 
 .monitor-column {
+  position: relative;
   display: grid;
   gap: 0.75rem;
   align-self: center;
@@ -307,10 +308,14 @@ h2 {
 }
 
 .monitor-toast-feed {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.75rem);
   display: grid;
   gap: 0.45rem;
   align-content: start;
-  min-height: 120px;
+  pointer-events: none;
 }
 
 .monitor-toast {
@@ -327,7 +332,7 @@ h2 {
 }
 
 .monitor-toast.is-closing {
-  animation: monitor-toast-exit 220ms ease forwards;
+  animation: monitor-toast-exit 1000ms ease forwards;
 }
 
 .monitor-toast.is-warning {
