@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { paletteValues } from '../design/designTokens'
 import type { ShapeType } from '../design/shapeTypes'
 import ShapeButtonShell from './ShapeButtonShell'
 
@@ -47,7 +48,7 @@ function DesiredStateEditor({
 }: DesiredStateEditorProps) {
   const [editingShapeId, setEditingShapeId] = useState<string | undefined>(undefined)
   const [draftType, setDraftType] = useState<DesiredShapeType>('circle')
-  const [draftColor, setDraftColor] = useState<string>(colorOptions[0]?.value ?? '#1992D4')
+  const [draftColor, setDraftColor] = useState<string>(colorOptions[0]?.value ?? paletteValues.ocean)
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const priorFocusRef = useRef<HTMLElement | null>(null)
 
@@ -62,7 +63,7 @@ function DesiredStateEditor({
     }
     setEditingShapeId('new')
     setDraftType('circle')
-    setDraftColor(colorOptions[0]?.value ?? '#1992D4')
+    setDraftColor(colorOptions[0]?.value ?? paletteValues.ocean)
   }
 
   function openEditModal(shape: DesiredShape) {

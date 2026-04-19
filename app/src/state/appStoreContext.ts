@@ -1,4 +1,5 @@
 import { createContext, type Dispatch } from 'react'
+import { paletteValues } from '../design/designTokens'
 import type { ShapeType } from '../design/shapeTypes'
 import type { ActualShape, DesiredShape } from './types'
 
@@ -21,16 +22,16 @@ export type AppAction =
 
 export const initialState: AppState = {
   desiredState: [
-    { id: 'shape-1', type: 'circle', color: '#E8695C' },
-    { id: 'shape-2', type: 'triangle', color: '#1CBFAA' },
-    { id: 'shape-3', type: 'square', color: '#C77DFF' },
-    { id: 'shape-4', type: 'x', color: '#4FA7FF' },
+    { id: 'shape-1', type: 'circle', color: paletteValues.coral },
+    { id: 'shape-2', type: 'triangle', color: paletteValues.mint },
+    { id: 'shape-3', type: 'square', color: paletteValues.purple },
+    { id: 'shape-4', type: 'x', color: paletteValues.ocean },
   ],
   actualState: [
-    { id: 'shape-1', type: 'circle', color: '#E8695C', x: 18, y: 30, size: 64 },
-    { id: 'shape-2', type: 'triangle', color: '#1CBFAA', x: 42, y: 58, size: 66 },
-    { id: 'shape-3', type: 'square', color: '#C77DFF', x: 66, y: 34, size: 62 },
-    { id: 'shape-4', type: 'x', color: '#4FA7FF', x: 84, y: 56, size: 62 },
+    { id: 'shape-1', type: 'circle', color: paletteValues.coral, x: 18, y: 30, size: 64 },
+    { id: 'shape-2', type: 'triangle', color: paletteValues.mint, x: 42, y: 58, size: 66 },
+    { id: 'shape-3', type: 'square', color: paletteValues.purple, x: 66, y: 34, size: 62 },
+    { id: 'shape-4', type: 'x', color: paletteValues.ocean, x: 84, y: 56, size: 62 },
   ],
 }
 

@@ -1,11 +1,11 @@
-import { shapeSpecs } from '../design/designTokens'
+import { paletteValues, shapeSpecs } from '../design/designTokens'
 import ShapeButtonShell from './ShapeButtonShell'
 
 const shapePreviewColors = {
-  circle: '#E8695C',
-  triangle: '#52D39B',
-  square: '#C77DFF',
-  x: '#4FA7FF',
+  circle: paletteValues.coral,
+  triangle: paletteValues.mint,
+  square: paletteValues.purple,
+  x: paletteValues.ocean,
 } as const
 
 function ShapeGallery() {

@@ -10,6 +10,13 @@ export type PaletteSwatch = {
   value: string
 }
 
+export const paletteValues = {
+  coral: '#E8695C',
+  mint: '#1CBFAA',
+  purple: '#C77DFF',
+  ocean: '#1992D4',
+} as const
+
 export const shapeSpecs: ShapeSpec[] = [
   { id: 'circle', label: 'Circle' },
   { id: 'triangle', label: 'Triangle' },
@@ -18,8 +25,8 @@ export const shapeSpecs: ShapeSpec[] = [
 ]
 
 export const palette: PaletteSwatch[] = [
-  { name: 'Coral', value: '#E8695C' },
-  { name: 'Mint', value: '#1CBFAA' },
-  { name: 'Purple', value: '#C77DFF' },
-  { name: 'Ocean', value: '#1992D4' },
+  { name: 'Coral', value: paletteValues.coral },
+  { name: 'Mint', value: paletteValues.mint },
+  { name: 'Purple', value: paletteValues.purple },
+  { name: 'Ocean', value: paletteValues.ocean },
 ]
