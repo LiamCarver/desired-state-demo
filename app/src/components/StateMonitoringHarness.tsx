@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import ActualStateCanvas from './ActualStateCanvas'
 import DesiredStateEditor from './DesiredStateEditor'
+import MonitorToastFeed, { type MonitorToastItem } from './MonitorToastFeed'
 import { useCanvasController } from '../features/canvas/hooks/useCanvasController'
 import { useDesiredStateEditorController } from '../features/desired-state/hooks/useDesiredStateEditorController'
 import { useAppDispatch, useAppState } from '../state/useAppStore'
@@ -8,14 +9,10 @@ import type { ActualShape, DesiredShape } from '../state/types'
 
 const RECONCILE_INTERVAL_MS = 2000
 const TOAST_DURATION_MS = 2600
+const TOAST_EXIT_DURATION_MS = 240
+const MAX_TOASTS = 4
 
 type MonitorStatus = 'in-sync' | 'out-of-sync'
-
-type MonitorToast = {
-  id: number
-  status: MonitorStatus
-  message: string
-}
 
 type DriftInfo = {
   status: MonitorStatus
@@ -94,7 +91,7 @@ function StateMonitoringHarness() {
   const { desiredState, actualState } = useAppState()
   const desiredEditorController = useDesiredStateEditorController()
   const canvasController = useCanvasController()
-  const [toasts, setToasts] = useState<MonitorToast[]>([])
+  const [toasts, setToasts] = useState<MonitorToastItem[]>([])
   const timeoutIdsRef = useRef<number[]>([])
   const toastIdRef = useRef(0)
   const desiredRef = useRef(desiredState)
@@ -108,14 +105,29 @@ function StateMonitoringHarness() {
     actualRef.current = actualState
   }, [desiredState, actualState])
 
+  function markToastClosing(toastId: number) {
+    setToasts((currentToasts) =>
+      currentToasts.map((toast) => (toast.id === toastId ? { ...toast, isClosing: true } : toast)),
+    )
+
+    const timeoutId = window.setTimeout(() => {
+      setToasts((currentToasts) => currentToasts.filter((toast) => toast.id !== toastId))
+    }, TOAST_EXIT_DURATION_MS)
+    timeoutIdsRef.current.push(timeoutId)
+  }
+
   function pushToast(status: MonitorStatus, message: string) {
     const nextId = toastIdRef.current + 1
     toastIdRef.current = nextId
 
-    setToasts((currentToasts) => [...currentToasts.slice(-2), { id: nextId, status, message }])
+    setToasts((currentToasts) => {
+      const activeToasts = currentToasts.filter((toast) => !toast.isClosing)
+      const nextToasts = [...activeToasts.slice(-(MAX_TOASTS - 1)), { id: nextId, status, message, isClosing: false }]
+      return nextToasts
+    })
 
     const timeoutId = window.setTimeout(() => {
-      setToasts((currentToasts) => currentToasts.filter((toast) => toast.id !== nextId))
+      markToastClosing(nextId)
     }, TOAST_DURATION_MS)
     timeoutIdsRef.current.push(timeoutId)
   }
@@ -170,33 +182,20 @@ function StateMonitoringHarness() {
         <div className="flow-line flow-line-right" />
       </div>
 
-      <section className="monitor-card" aria-label="State monitoring component">
-        <header className="monitor-card-header">
-          <h2>Monitoring</h2>
-          <p>Detects drift and explains what the reconciler is fixing.</p>
-        </header>
+      <div className="monitor-column">
+        <section className="monitor-card" aria-label="State monitoring component">
+          <header className="monitor-card-header">
+            <h2>Monitoring</h2>
+          </header>
 
-        <div className={`monitor-indicator ${isInSync ? 'is-in-sync' : 'is-out-of-sync'}`}>
-          <span className="monitor-indicator-dot" aria-hidden="true" />
-          <span>{isInSync ? 'In Sync' : 'Out of Sync'}</span>
-        </div>
+          <div className={`monitor-indicator ${isInSync ? 'is-in-sync' : 'is-out-of-sync'}`}>
+            <span className="monitor-indicator-dot" aria-hidden="true" />
+            <span>{isInSync ? 'In Sync' : 'Out of Sync'}</span>
+          </div>
+        </section>
 
-        <div className="monitor-details" aria-live="polite">
-          <p>{driftSummary.issue}</p>
-          <p>{driftSummary.fix}</p>
-        </div>
-
-        <div className="monitor-toast-stack" aria-live="polite" aria-label="Monitoring event toasts">
-          {toasts.map((toast) => (
-            <div
-              key={toast.id}
-              className={`monitor-toast ${toast.status === 'in-sync' ? 'is-success' : 'is-warning'}`}
-            >
-              {toast.message}
-            </div>
-          ))}
-        </div>
-      </section>
+        <MonitorToastFeed toasts={toasts} />
+      </div>
 
       <div className="flow-link flow-link-right" aria-hidden="true">
         <div className="flow-line flow-line-right" />
