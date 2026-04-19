@@ -5,6 +5,8 @@ import { useCanvasController } from '../features/canvas/hooks/useCanvasControlle
 import { useDesiredStateEditorController } from '../features/desired-state/hooks/useDesiredStateEditorController'
 import { useAppDispatch } from '../state/useAppStore'
 
+const RECONCILE_INTERVAL_MS = 2000
+
 type CanvasStateManagementHarnessProps = {
   showShapeIds?: boolean
   useGridLayout?: boolean
@@ -19,7 +21,13 @@ function CanvasStateManagementHarness({
   const canvasController = useCanvasController()
 
   useEffect(() => {
-    dispatch({ type: 'actual/sync-with-desired' })
+    const timerId = window.setInterval(() => {
+      dispatch({ type: 'actual/reconcile-step' })
+    }, RECONCILE_INTERVAL_MS)
+
+    return () => {
+      window.clearInterval(timerId)
+    }
   }, [dispatch])
 
   return (
@@ -35,7 +43,7 @@ function CanvasStateManagementHarness({
       />
       <ActualStateCanvas
         title="Actual State Canvas"
-        subtitle="Reads synchronized updates from store state."
+        subtitle="Reconciler applies desired deltas on a 2-second timer."
         shapes={canvasController.shapes}
         selectedShapeId={canvasController.selectedShapeId}
         colorChangingShapeId={canvasController.colorChangingShapeId}
