@@ -20,6 +20,8 @@ type DesiredStateEditorProps = {
   subtitle: string
   shapes: DesiredShape[]
   colorOptions: ColorOption[]
+  fixedHeight?: boolean
+  maxShapes?: number
   onCreateShape: (nextType: DesiredShapeType, nextColor: string) => void
   onRemoveShape: (shapeId: string) => void
   onUpdateShape: (shapeId: string, nextType: DesiredShapeType, nextColor: string) => void
@@ -37,6 +39,8 @@ function DesiredStateEditor({
   subtitle,
   shapes,
   colorOptions,
+  fixedHeight = false,
+  maxShapes,
   onCreateShape,
   onRemoveShape,
   onUpdateShape,
@@ -50,8 +54,12 @@ function DesiredStateEditor({
   const editingShape = shapes.find((shape) => shape.id === editingShapeId)
   const isModalOpen = editingShapeId !== undefined
   const isCreateMode = editingShapeId === 'new'
+  const hasReachedMaxShapes = maxShapes !== undefined && shapes.length >= maxShapes
 
   function openCreateModal() {
+    if (hasReachedMaxShapes) {
+      return
+    }
     setEditingShapeId('new')
     setDraftType('circle')
     setDraftColor(colorOptions[0]?.value ?? '#1992D4')
@@ -120,7 +128,7 @@ function DesiredStateEditor({
   }, [isModalOpen])
 
   return (
-    <section className="editor-card" aria-label="Desired state editor component">
+    <section className={`editor-card${fixedHeight ? ' is-fixed-height' : ''}`} aria-label="Desired state editor component">
       <header className="editor-card-header">
         <h2>{title}</h2>
         <p>{subtitle}</p>
@@ -131,7 +139,8 @@ function DesiredStateEditor({
         className="btn-shell-only"
         onClick={openCreateModal}
         aria-label="Add Shape"
-        title="Add Shape"
+        title={hasReachedMaxShapes ? `Maximum ${maxShapes} shapes reached` : 'Add Shape'}
+        disabled={hasReachedMaxShapes}
       >
         <span className="action-shell" style={{ color: '#4FA7FF' }}>
           <svg className="action-icon" viewBox="0 0 24 24" aria-hidden="true">

@@ -14,8 +14,10 @@ describe('App routing', () => {
   it('renders the home route', () => {
     renderRoute('/')
 
-    expect(screen.getByRole('heading', { name: 'Desired State Demo' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Open /design' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'State monitoring harness' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'State monitoring component' })).toBeInTheDocument()
+    expect(screen.getByText('In Sync')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Add Shape' })).toBeDisabled()
   })
 
   it('renders the design route sections', () => {
@@ -59,6 +61,6 @@ describe('App routing', () => {
   it('redirects unknown routes to home', () => {
     renderRoute('/unknown')
 
-    expect(screen.getByRole('heading', { name: 'Desired State Demo' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'State monitoring harness' })).toBeInTheDocument()
   })
 })
