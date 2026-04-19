@@ -42,4 +42,23 @@ describe('Canvas state management harness', () => {
     expect(screen.getByRole('listitem', { name: 'Select shape-1' })).toHaveClass('canvas-shape-triangle')
     expect(screen.queryByRole('listitem', { name: 'Select shape-2' })).not.toBeInTheDocument()
   })
+
+  it('animates shape color when reconciler syncs actual state', () => {
+    renderHarnessRoute()
+
+    const shapeOne = screen.getByRole('listitem', { name: 'Select shape-1' })
+    expect(shapeOne).not.toHaveClass('is-color-changing')
+
+    act(() => {
+      vi.advanceTimersByTime(2_000)
+    })
+
+    expect(screen.getByRole('listitem', { name: 'Select shape-1' })).toHaveClass('is-color-changing')
+
+    act(() => {
+      vi.advanceTimersByTime(560)
+    })
+
+    expect(screen.getByRole('listitem', { name: 'Select shape-1' })).not.toHaveClass('is-color-changing')
+  })
 })

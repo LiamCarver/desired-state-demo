@@ -27,8 +27,8 @@ export const initialState: AppState = {
     { id: 'shape-4', type: 'x', color: '#4FA7FF' },
   ],
   actualState: [
-    { id: 'shape-1', type: 'circle', color: '#FF6B6B', x: 18, y: 30, size: 64 },
-    { id: 'shape-2', type: 'triangle', color: '#52D39B', x: 42, y: 58, size: 66 },
+    { id: 'shape-1', type: 'circle', color: '#E8695C', x: 18, y: 30, size: 64 },
+    { id: 'shape-2', type: 'triangle', color: '#1CBFAA', x: 42, y: 58, size: 66 },
     { id: 'shape-3', type: 'square', color: '#C77DFF', x: 66, y: 34, size: 62 },
     { id: 'shape-4', type: 'x', color: '#4FA7FF', x: 84, y: 56, size: 62 },
   ],
