@@ -23,11 +23,31 @@ type ActualStateCanvasProps = {
   shapes: CanvasShape[]
   selectedShapeId?: string
   colorChangingShapeId?: string
+  showShapeIds?: boolean
+  useGridLayout?: boolean
   colorOptions: CanvasColorOption[]
   onSelectShape: (shapeId: string) => void
   onClearSelection: () => void
   onDeleteSelected: () => void
   onSelectColor: (colorValue: string) => void
+}
+
+function getGridPosition(index: number, total: number) {
+  if (total <= 0) {
+    return { x: 50, y: 50 }
+  }
+  const cols = Math.ceil(Math.sqrt(total))
+  const rows = Math.ceil(total / cols)
+  const col = index % cols
+  const row = Math.floor(index / cols)
+  const horizontalPadding = 14
+  const verticalPadding = 18
+  const stepX = cols === 1 ? 0 : (100 - horizontalPadding * 2) / (cols - 1)
+  const stepY = rows === 1 ? 0 : (100 - verticalPadding * 2) / (rows - 1)
+  return {
+    x: cols === 1 ? 50 : horizontalPadding + col * stepX,
+    y: rows === 1 ? 50 : verticalPadding + row * stepY,
+  }
 }
 
 function ActualStateCanvas({
@@ -36,6 +56,8 @@ function ActualStateCanvas({
   shapes,
   selectedShapeId,
   colorChangingShapeId,
+  showShapeIds = true,
+  useGridLayout = true,
   colorOptions,
   onSelectShape,
   onClearSelection,
@@ -61,10 +83,11 @@ function ActualStateCanvas({
           }
         }}
       >
-        {shapes.map((shape) => {
+        {shapes.map((shape, index) => {
           const shapeClass = `canvas-shape canvas-shape-${shape.type}`
           const isSelected = shape.id === selectedShapeId
           const isColorChanging = shape.id === colorChangingShapeId
+          const position = useGridLayout ? getGridPosition(index, shapes.length) : { x: shape.x, y: shape.y }
           return (
             <button
               key={shape.id}
@@ -74,12 +97,13 @@ function ActualStateCanvas({
               aria-pressed={isSelected}
               className={`${shapeClass}${isSelected ? ' is-selected' : ''}${isColorChanging ? ' is-color-changing' : ''}`}
               style={{
-                left: `${shape.x}%`,
-                top: `${shape.y}%`,
+                left: `${position.x}%`,
+                top: `${position.y}%`,
               }}
               onClick={() => onSelectShape(shape.id)}
             >
               <ShapeButtonShell type={shape.type} color={shape.color} size={shape.size} />
+              {showShapeIds ? <span className="canvas-shape-id">{shape.id}</span> : null}
             </button>
           )
         })}

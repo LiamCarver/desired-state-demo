@@ -28,6 +28,7 @@ describe('App routing', () => {
     expect(screen.getByRole('heading', { name: 'Color Palette' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Open ActualStateCanvas' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Open DesiredStateEditor' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Open Canvas State Harness' })).toBeInTheDocument()
   })
 
   it('renders the canvas component route', () => {
@@ -44,6 +45,15 @@ describe('App routing', () => {
     expect(screen.getByRole('heading', { name: 'DesiredStateEditor' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Desired state editor component' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Add Shape' })).toBeInTheDocument()
+  })
+
+  it('renders the canvas state management harness route', () => {
+    renderRoute('/design/components/canvas-state-management-harness')
+
+    expect(screen.getByRole('heading', { name: 'Canvas State Management Harness' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Canvas state management harness' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Desired state editor component' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Actual state canvas component' })).toBeInTheDocument()
   })
 
   it('redirects unknown routes to home', () => {

@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import CanvasComponentRoute from './routes/CanvasComponentRoute'
+import CanvasStateManagementHarnessRoute from './routes/CanvasStateManagementHarnessRoute'
 import DesignRoute from './routes/DesignRoute'
 import DesiredStateEditorComponentRoute from './routes/DesiredStateEditorComponentRoute'
 import HomeRoute from './routes/HomeRoute'
@@ -12,6 +13,10 @@ function App() {
         <Route path="/" element={<HomeRoute />} />
         <Route path="/design" element={<DesignRoute />} />
         <Route path="/design/components/canvas" element={<CanvasComponentRoute />} />
+        <Route
+          path="/design/components/canvas-state-management-harness"
+          element={<CanvasStateManagementHarnessRoute />}
+        />
         <Route
           path="/design/components/desired-state-editor"
           element={<DesiredStateEditorComponentRoute />}

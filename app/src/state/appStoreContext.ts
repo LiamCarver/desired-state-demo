@@ -9,6 +9,7 @@ export type AppState = {
 }
 
 export type AppAction =
+  | { type: 'actual/sync-with-desired' }
   | { type: 'actual/select-shape'; shapeId?: string }
   | { type: 'actual/delete-selected' }
   | { type: 'actual/set-selected-color'; color: string }
@@ -31,8 +32,89 @@ export const initialState: AppState = {
   ],
 }
 
+const actualShapeLayoutSlots = [
+  { x: 16, y: 22 },
+  { x: 34, y: 26 },
+  { x: 52, y: 22 },
+  { x: 70, y: 26 },
+  { x: 84, y: 40 },
+  { x: 70, y: 58 },
+  { x: 52, y: 64 },
+  { x: 34, y: 58 },
+  { x: 16, y: 44 },
+]
+
+function shapeNumericId(shapeId: string) {
+  const numericId = Number(shapeId.replace('shape-', ''))
+  return Number.isNaN(numericId) ? 0 : numericId
+}
+
+function nextShapeNumber(state: AppState) {
+  return (
+    Math.max(
+      ...state.desiredState.map((shape) => shapeNumericId(shape.id)),
+      ...state.actualState.map((shape) => shapeNumericId(shape.id)),
+      0,
+    ) + 1
+  )
+}
+
+function buildActualShape(nextNumber: number, nextType: ShapeType, nextColor: string): ActualShape {
+  const slot = actualShapeLayoutSlots[(nextNumber - 1) % actualShapeLayoutSlots.length]
+  const size = 62 + ((nextNumber - 1) % 3) * 2
+  return {
+    id: `shape-${nextNumber}`,
+    type: nextType,
+    color: nextColor,
+    x: slot.x,
+    y: slot.y,
+    size,
+  }
+}
+
+function buildActualShapeForIndex(
+  shapeId: string,
+  nextType: ShapeType,
+  nextColor: string,
+  index: number,
+): ActualShape {
+  const slot = actualShapeLayoutSlots[index % actualShapeLayoutSlots.length]
+  const size = 62 + (index % 3) * 2
+  return {
+    id: shapeId,
+    type: nextType,
+    color: nextColor,
+    x: slot.x,
+    y: slot.y,
+    size,
+  }
+}
+
+function syncActualWithDesired(state: AppState): ActualShape[] {
+  const actualById = new Map(state.actualState.map((shape) => [shape.id, shape]))
+  return state.desiredState.map((desiredShape, index) => {
+    const matchingActual = actualById.get(desiredShape.id)
+    if (!matchingActual) {
+      return buildActualShapeForIndex(desiredShape.id, desiredShape.type, desiredShape.color, index)
+    }
+    return {
+      ...matchingActual,
+      type: desiredShape.type,
+      color: desiredShape.color,
+    }
+  })
+}
+
 export function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
+    case 'actual/sync-with-desired':
+      return {
+        ...state,
+        actualState: syncActualWithDesired(state),
+        selectedActualShapeId: state.desiredState.some((shape) => shape.id === state.selectedActualShapeId)
+          ? state.selectedActualShapeId
+          : undefined,
+      }
     case 'actual/select-shape':
       return { ...state, selectedActualShapeId: action.shapeId }
     case 'actual/delete-selected':
@@ -55,27 +137,27 @@ export function appReducer(state: AppState, action: AppAction): AppState {
         ),
       }
     case 'desired/add-shape': {
-      const nextShapeNumber =
-        state.desiredState.reduce((max, shape) => {
-          const numericId = Number(shape.id.replace('shape-', ''))
-          return Number.isNaN(numericId) ? max : Math.max(max, numericId)
-        }, 0) + 1
+      const nextNumber = nextShapeNumber(state)
       return {
         ...state,
         desiredState: [
           ...state.desiredState,
           {
-            id: `shape-${nextShapeNumber}`,
+            id: `shape-${nextNumber}`,
             type: action.nextType,
             color: action.nextColor,
           },
         ],
+        actualState: [...state.actualState, buildActualShape(nextNumber, action.nextType, action.nextColor)],
       }
     }
     case 'desired/remove-shape':
       return {
         ...state,
         desiredState: state.desiredState.filter((shape) => shape.id !== action.shapeId),
+        actualState: state.actualState.filter((shape) => shape.id !== action.shapeId),
+        selectedActualShapeId:
+          state.selectedActualShapeId === action.shapeId ? undefined : state.selectedActualShapeId,
       }
     case 'desired/set-shape-type':
       return {
@@ -83,11 +165,17 @@ export function appReducer(state: AppState, action: AppAction): AppState {
         desiredState: state.desiredState.map((shape) =>
           shape.id === action.shapeId ? { ...shape, type: action.nextType } : shape,
         ),
+        actualState: state.actualState.map((shape) =>
+          shape.id === action.shapeId ? { ...shape, type: action.nextType } : shape,
+        ),
       }
     case 'desired/set-shape-color':
       return {
         ...state,
         desiredState: state.desiredState.map((shape) =>
+          shape.id === action.shapeId ? { ...shape, color: action.nextColor } : shape,
+        ),
+        actualState: state.actualState.map((shape) =>
           shape.id === action.shapeId ? { ...shape, color: action.nextColor } : shape,
         ),
       }
